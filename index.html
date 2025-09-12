@@ -87,6 +87,35 @@
   }
 
   footer { margin-top: 48px; font-size: 0.9rem; color: #555; }
+
+  /* ----------- Fullscreen game mode ----------- */
+  #fullscreenWrapper {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #000;
+    z-index: 999;
+  }
+  #gameFrame {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+  #backButton {
+    position: absolute;
+    top: 12px; left: 12px;
+    z-index: 1000;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.85);
+    font-family: sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  #backButton:hover { background: white; }
 </style>
 </head>
 <body>
@@ -112,6 +141,12 @@
 <main>
   <div class="catalog" id="gameCatalog"></div>
 </main>
+
+<!-- Fullscreen wrapper -->
+<div id="fullscreenWrapper">
+  <button id="backButton">⟵ Back</button>
+  <iframe id="gameFrame"></iframe>
+</div>
 
 <script>
 const gameFiles = [
@@ -187,9 +222,13 @@ const gameFiles = [
 
 function createGameCard(game) {
   const a = document.createElement("a");
-  a.href = game.file;
+  a.href = "#";
   a.className = "game-card";
   a.role = "listitem";
+  a.addEventListener("click", (e) => {
+    e.preventDefault();
+    openFullscreen(game.file);
+  });
 
   const img = document.createElement("img");
   img.src = game.image;
@@ -200,11 +239,6 @@ function createGameCard(game) {
   const title = document.createElement("h3");
   title.textContent = game.displayName;
   a.appendChild(title);
-
-  // Removed the file name display
-  // const fileName = document.createElement("p");
-  // fileName.textContent = game.file;
-  // a.appendChild(fileName);
 
   return a;
 }
@@ -239,6 +273,19 @@ filterButtons.forEach(button => {
     button.classList.add("active");
     renderCatalog(searchInput.value, button.dataset.category);
   });
+});
+
+// -------- Fullscreen mode --------
+function openFullscreen(gameFile) {
+  document.getElementById("fullscreenWrapper").style.display = "block";
+  document.getElementById("gameFrame").src = gameFile;
+  document.body.style.overflow = "hidden";
+}
+
+document.getElementById("backButton").addEventListener("click", () => {
+  document.getElementById("fullscreenWrapper").style.display = "none";
+  document.getElementById("gameFrame").src = "";
+  document.body.style.overflow = "auto";
 });
 </script>
 </body>
