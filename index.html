@@ -1,119 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>TeachingPortal.org - Game Hub</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TeachingPortal.org - Game Hub</title>
 
-<!-- Poppins font -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
 
-<style>
-  *, *::before, *::after { box-sizing: border-box; }
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: #121212;
+      color: #fff;
+    }
 
-  body {
-    margin: 0;
-    background-color: #121212;
-    color: #eee;
-    font-family: 'Poppins', sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-    padding: 40px 20px 60px;
-  }
+    header {
+      text-align: center;
+      padding: 2rem 1rem;
+      background: #1e1e1e;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+      font-weight: 600;
+    }
 
-  header {
-    font-weight: 600;
-    font-size: 3rem;
-    margin-bottom: 32px;
-    letter-spacing: 0.1em;
-    user-select: none;
-  }
+    /* Game grid */
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      padding: 2rem;
+      max-width: 1400px;
+      margin: auto;
+    }
 
-  #searchContainer { width: 100%; max-width: 600px; margin-bottom: 20px; }
-  #searchInput {
-    width: 100%;
-    padding: 14px 20px;
-    font-size: 1.15rem;
-    border-radius: 8px;
-    border: 2px solid #333;
-    background-color: #1f1f1f;
-    color: #eee;
-  }
-  #searchInput:focus { border-color: #4e94f1; outline: none; }
+    /* Game card */
+    .game-card {
+      background: #1f1f1f;
+      border-radius: 1rem;
+      overflow: hidden;
+      text-decoration: none;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s ease;
+    }
+    .game-card:hover {
+      transform: scale(1.05);
+    }
 
-  .filter-buttons {
-    display: flex; flex-wrap: wrap; gap: 10px;
-    justify-content: center; margin-bottom: 30px;
-  }
-  .filter-buttons button {
-    padding: 8px 16px; border: none; border-radius: 20px;
-    background-color: #1f1f1f; color: #eee; font-size: 0.95rem;
-    cursor: pointer;
-  }
-  .filter-buttons button:hover,
-  .filter-buttons button.active {
-    background-color: #4e94f1; color: #fff;
-  }
+    /* Image wrapper */
+    .game-card img {
+      width: 100%;
+      height: 150px;        /* fixed height */
+      object-fit: cover;    /* keeps aspect ratio, fills card */
+      display: block;
+    }
 
-  .catalog {
-    display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
-    gap: 24px; width: 100%; max-width: 960px;
-  }
+    /* Game title */
+    .game-card h3 {
+      margin: 0.5rem 1rem 0 1rem;
+      font-size: 1rem;
+      font-weight: 600;
+    }
 
-  a.game-card {
-    background-color: #1f1f1f;
-    border-radius: 16px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.6);
-    color: #eee; text-decoration: none;
-    display: flex; flex-direction: column;
-    align-items: center; padding: 24px 16px 20px;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-  }
-  a.game-card:hover { transform: scale(1.05); box-shadow: 0 10px 20px rgba(78,148,241,0.6); }
-
-  .icon-wrapper {
-    width: 100px; height: 100px; margin-bottom: 16px; border-radius: 12px;
-    object-fit: cover; background-color: #222;
-  }
-
-  a.game-card h3 {
-    font-weight: 600; font-size: 1.1rem; text-align: center; margin: 0;
-  }
-  a.game-card p {
-    margin: 6px 0 0; font-size: 0.8rem; color: #aaa;
-  }
-
-  footer { margin-top: 48px; font-size: 0.9rem; color: #555; }
-</style>
+    /* File name text */
+    .game-card p {
+      margin: 0.25rem 1rem 1rem 1rem;
+      font-size: 0.8rem;
+      color: #aaa;
+    }
+  </style>
 </head>
 <body>
+  <header>
+    <h1>TeachingPortal.org - Game Hub</h1>
+  </header>
 
-<header>TeachingPortal.org</header>
+  <main>
+    <section class="game-grid" id="gameGrid"></section>
+  </main>
 
-<div id="searchContainer">
-  <input type="text" id="searchInput" placeholder="Search games...">
-</div>
-
-<div class="filter-buttons">
-  <button data-category="all" class="active">All</button>
-  <button data-category="arcade">Arcade</button>
-  <button data-category="sports">Sports</button>
-  <button data-category="racing">Racing</button>
-  <button data-category="puzzle">Puzzle</button>
-  <button data-category="shooter">Shooter</button>
-  <button data-category="strategy">Strategy</button>
-  <button data-category="classics">Classics</button>
-  <button data-category="sandbox">Sandbox</button>
-</div>
-
-<main>
-  <div class="catalog" id="gameCatalog"></div>
-</main>
-
-<script>
+  <script>
 const gameFiles = [
   { file:"clcrazycars.html", displayName:"Crazy Cars", image:"images/clcrazycars.png", category:"racing" },
   { file:"cldrivemad.html", displayName:"Drive Mad", image:"images/cldrivemad.png", category:"racing" },
