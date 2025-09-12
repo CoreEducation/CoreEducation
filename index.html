@@ -56,22 +56,17 @@
     .game-card img {
       width: 100%;
       height: 150px;        /* fixed height */
-      object-fit: cover;    /* keeps aspect ratio, fills card */
+      object-fit: cover;    /* keeps aspect ratio, crops if needed */
       display: block;
+      background: #333;
     }
 
     /* Game title */
     .game-card h3 {
-      margin: 0.5rem 1rem 0 1rem;
+      margin: 0.5rem 1rem 1rem 1rem;
       font-size: 1rem;
       font-weight: 600;
-    }
-
-    /* File name text */
-    .game-card p {
-      margin: 0.25rem 1rem 1rem 1rem;
-      font-size: 0.8rem;
-      color: #aaa;
+      text-align: center;
     }
   </style>
 </head>
@@ -85,133 +80,102 @@
   </main>
 
   <script>
-const gameFiles = [
-  { file:"clcrazycars.html", displayName:"Crazy Cars", image:"images/clcrazycars.png", category:"racing" },
-  { file:"cldrivemad.html", displayName:"Drive Mad", image:"images/cldrivemad.png", category:"racing" },
-  { file:"cldriftboss.html", displayName:"Drift Boss", image:"images/cldriftboss.png", category:"racing" },
-  { file:"clgta22.html", displayName:"GTA 22", image:"images/clgta22.png", category:"racing" },
-  { file:"Eaglercraft1.12.html", displayName:"Eaglercraft 1.12", image:"images/Eaglercraft1.12.png", category:"sandbox" },
-  { file:"cl1v1maybeidk.html", displayName:"1v1 Maybe", image:"images/cl1v1maybeidk.png", category:"shooter" },
-  { file:"cl8ballpool.html", displayName:"8 Ball Pool", image:"images/cl8ballpool.png", category:"sports" },
-  { file:"cl99balls.html", displayName:"99 Balls", image:"images/cl99balls.png", category:"arcade" },
-  { file:"clagariolite.html", displayName:"Agario Lite", image:"images/clagariolite.png", category:"arcade" },
-  { file:"clamaze.html", displayName:"Amazing Maze", image:"images/clamaze.png", category:"puzzle" },
-  { file:"clamongus.html", displayName:"Among Us", image:"images/clamongus.png", category:"strategy" },
-  { file:"clangrybirds.html", displayName:"Angry Birds", image:"images/clangrybirds.png", category:"puzzle" },
-  { file:"Claquaparkio.html", displayName:"Aquapark.io", image:"images/Claquaparkio.png", category:"arcade" },
-  { file:"Clattackhole.html", displayName:"Attack Hole", image:"images/Clattackhole.png", category:"arcade" },
-  { file:"Clawesometanks2.html", displayName:"Awesome Tanks 2", image:"images/Clawesometanks2.png", category:"shooter" },
-  { file:"clbankrobbery2.html", displayName:"Bank Robbery 2", image:"images/clbankrobbery2.png", category:"strategy" },
-  { file:"clbasketballstars.html", displayName:"Basketball Stars", image:"images/clbasketballstars.png", category:"sports" },
-  { file:"Clbigicetowertinysquare.html", displayName:"Big Ice Tower Tiny Square", image:"images/Clbigicetowertinysquare.png", category:"puzzle" },
-  { file:"Clbubbleshooter.htm", displayName:"Bubble Shooter", image:"images/Clbubbleshooter.png", category:"puzzle" },
-  { file:"Clburritobison.html", displayName:"Burrito Bison", image:"images/Clburritobison.png", category:"arcade" },
-  { file:"Clcookieclicker.html", displayName:"Cookie Clicker", image:"images/Clcookieclickercool.png", category:"strategy" },
-  { file:"Cldigdeep.html", displayName:"Dig Deep", image:"images/Cldigdeep.png", category:"arcade" },
-  { file:"cldoodlejumpgoober.html", displayName:"Doodle Jump", image:"images/cldoodlejumpgoober.png", category:"arcade" },
-  { file:"cldrawclimber.html", displayName:"Draw Climber", image:"images/cldrawclimber.png", category:"arcade" },
-  { file:"clearntodie.html", displayName:"Earn To Die", image:"images/clearntodie.png", category:"arcade" },
-  { file:"clfireboyandwatergirl.html", displayName:"Fireboy & Watergirl", image:"images/clfireboyandwatergirl.png", category:"puzzle" },
-  { file:"Clflappydunk.html", displayName:"Flappy Dunk", image:"images/Clflappydunk.png", category:"arcade" },
-  { file:"clfreerider.html", displayName:"Free Rider", image:"images/clfreerider.png", category:"arcade" },
-  { file:"Clfunnyshooter2.html", displayName:"Funny Shooter 2", image:"images/Clfunnyshooter2.png", category:"shooter" },
-  { file:"Clhappywheels.html", displayName:"Happy Wheels", image:"images/Clhappywheels.png", category:"arcade" },
-  { file:"clhardwaretycoon.html", displayName:"Hardware Tycoon", image:"images/clhardwaretycoon.png", category:"strategy" },
-  { file:"clhelixjump.html", displayName:"Helix Jump", image:"images/clhelixjump.png", category:"arcade" },
-  { file:"Clhidenseek.html", displayName:"Hide & Seek", image:"images/Clhidenseek.png", category:"arcade" },
-  { file:"Clholeio.html", displayName:"Hole.io", image:"images/Clholeio.png", category:"arcade" },
-  { file:"Clidlebreakout.html", displayName:"Idle Breakout", image:"images/Clidlebreakout.png", category:"puzzle" },
-  { file:"clidleminertycoon.html", displayName:"Idle Miner Tycoon", image:"images/clidleminertycoon.png", category:"strategy" },
-  { file:"Cljellytruck.html", displayName:"Jelly Truck", image:"images/Cljellytruckgood.png", category:"racing" },
-  { file:"cljetpackjoyride.html", displayName:"Jetpack Joyride", image:"images/cljetpackjoyride.png", category:"arcade" },
-  { file:"cljohnnytrigger.html", displayName:"Johnny Trigger", image:"images/cljohnnytrigger.png", category:"shooter" },
-  { file:"Cllearntofly.html", displayName:"Learn To Fly", image:"images/Cllearntofly.png", category:"arcade" },
-  { file:"clmadalinstuntcarsmultiplayerfixed.html", displayName:"Madalin Stunt Cars Multiplayer", image:"images/clmadalinstuntcarsmultiplayerfixed.png", category:"racing" },
-  { file:"clmotox3m.html", displayName:"Moto X3M", image:"images/clmotox3m.png", category:"racing" },
-  { file:"clmotox3mpoolparty.html", displayName:"Moto X3M Pool Party", image:"images/clmotox3mpoolparty.png", category:"racing" },
-  { file:"clmotox3mspookyland.html", displayName:"Moto X3M Spookyland", image:"images/clmotox3mspookyland.png", category:"racing" },
-  { file:"Clmotox3mwinter.html", displayName:"Moto X3M Winter", image:"images/Clmotox3mwinter.png", category:"racing" },
-  { file:"clmutilate-a-doll.html", displayName:"Mutilate-a-Doll", image:"images/clmutilate-a-doll.png", category:"sandbox" },
-  { file:"clpenaltykicks.html", displayName:"Penalty Kicks", image:"images/clpenaltykicks.png", category:"sports" },
-  { file:"cl2Dshooting.html", displayName:"2D Shooting", image:"images/cl2Dshooting.png", category:"shooter" },
-  { file:"cl3dash.html", displayName:"3 Dash", image:"images/cl3dash.png", category:"arcade" },
-  { file:"cl60secondsburgerrun.html", displayName:"60s Burger Run", image:"images/cl60secondsburgerrun.png", category:"arcade" },
-  { file:"cl8ballclassic.html", displayName:"8 Ball Classic", image:"images/cl8ballclassic.png", category:"sports" },
-  { file:"clacegangstertaxi.html", displayName:"Ace Gangster Taxi", image:"images/clacegangstertaxi.png", category:"racing" },
-  { file:"clkoopasrevenge.html", displayName:"Koopa's Revenge", image:"images/clkoopasrevenge.png", category:"classics" },
-  { file:"clattackhole.html", displayName:"Attack Hole", image:"images/clattackhole.png", category:"arcade" },
-  { file:"clbadpiggies.html", displayName:"Bad Piggies", image:"images/clbadpiggies.png", category:"puzzle" },
-  { file:"clbobtherobber.html", displayName:"Bob The Robber", image:"images/clbobtherobber.png", category:"strategy" },
-  { file:"clfactoryballs.html", displayName:"Factory Balls", image:"images/clfactoryballs.png", category:"puzzle" },
-  { file:"clfactoryballs2.html", displayName:"Factory Balls 2", image:"images/clfactoryballs2.png", category:"puzzle" },
-  { file:"clgoingballs.html", displayName:"Going Balls", image:"images/clgoingballs.png", category:"arcade" },
-  { file:"clgolddiggerfrvr.html", displayName:"Gold Digger FRVR", image:"images/clgolddiggerfrvr.png", category:"arcade" },
-  { file:"clhappywheels.html", displayName:"Happy Wheels", image:"images/clhappywheels.png", category:"arcade" },
-  { file:"clsubwaysurfersmiami.html", displayName:"Subway Surfers Miami", image:"images/clsubwaysurfersmiami.png", category:"arcade" },
-  { file:"clvex2.html", displayName:"Vex 2", image:"images/clvex2.png", category:"arcade" },
-  { file:"clFIFA99.html", displayName:"FIFA 99", image:"images/clFIFA99.png", category:"sports" },
-  { file:"clFIFA07.html", displayName:"FIFA 07", image:"images/clFIFA07.png", category:"sports" },
-  { file:"clgta2.html", displayName:"GTA 2", image:"images/clgta2.png", category:"racing" },
-  { file:"cllegostarwars.html", displayName:"LEGO Star Wars", image:"images/cllegostarwars.png", category:"classics" },
-  { file:"clmadden98.html", displayName:"Madden 98", image:"images/clmadden98.png", category:"sports" },
-  { file:"TABS.html", displayName:"Totally Accurate Battle Simulator", image:"images/TABS.png", category:"strategy" }
-];
+    const defaultImage = "images/default.png"; // fallback if missing
 
-// Create a game card
-function createGameCard(game) {
-  const a = document.createElement("a");
-  a.href = game.file;
-  a.className = "game-card";
-  a.role = "listitem";
+    const gameFiles = [
+      { file: "clcrazycars.html", displayName: "Crazy Cars", image: "images/clcrazycars.png", category: "racing" },
+      { file: "cldrivemad.html", displayName: "Drive Mad", image: "images/cldrivemad.png", category: "racing" },
+      { file: "cldriftboss.html", displayName: "Drift Boss", image: "images/cldriftboss.png", category: "racing" },
+      { file: "clgta22.html", displayName: "GTA 22", image: "images/clgta22.png", category: "racing" },
+      { file: "Eaglercraft1.12.html", displayName: "Eaglercraft 1.12", image: "images/eaglercraft112.png", category: "sandbox" },
+      { file: "cl1v1maybeidk.html", displayName: "1v1", image: "images/cl1v1maybeidk.png", category: "shooter" },
+      { file: "cl8ballpool.html", displayName: "8 Ball Pool", image: "images/cl8ballpool.png", category: "sports" },
+      { file: "cl99balls.html", displayName: "99 Balls", image: "images/cl99balls.png", category: "arcade" },
+      { file: "clagariolite.html", displayName: "Agar.io Lite", image: "images/clagariolite.png", category: "arcade" },
+      { file: "clamaze.html", displayName: "Amazing Maze", image: "images/clamaze.png", category: "puzzle" },
+      { file: "clamongus.html", displayName: "Among Us", image: "images/clamongus.png", category: "strategy" },
+      { file: "clangrybirds.html", displayName: "Angry Birds", image: "images/clangrybirds.png", category: "puzzle" },
+      { file: "Claquaparkio.html", displayName: "Aquapark.io", image: "images/claquaparkio.png", category: "arcade" },
+      { file: "Clattackhole.html", displayName: "Attack Hole", image: "images/clattackhole.png", category: "arcade" },
+      { file: "Clawesometanks2.html", displayName: "Awesome Tanks 2", image: "images/clawesometanks2.png", category: "shooter" },
+      { file: "clbankrobbery2.html", displayName: "Bank Robbery 2", image: "images/clbankrobbery2.png", category: "strategy" },
+      { file: "clbasketballstars.html", displayName: "Basketball Stars", image: "images/clbasketballstars.png", category: "sports" },
+      { file: "Clbigicetowertinysquare.html", displayName: "Big Ice Tower Tiny Square", image: "images/clbigicetowertinysquare.png", category: "puzzle" },
+      { file: "Clbubbleshooter.htm", displayName: "Bubble Shooter", image: "images/clbubbleshooter.png", category: "puzzle" },
+      { file: "Clburritobison.html", displayName: "Burrito Bison", image: "images/clburritobison.png", category: "arcade" },
+      { file: "Clcookieclickercool.html", displayName: "Cookie Clicker", image: "images/clcookieclickercool.png", category: "strategy" },
+      { file: "Cldigdeep.html", displayName: "Dig Deep", image: "images/cldigdeep.png", category: "arcade" },
+      { file: "cldoodlejumpgoober.html", displayName: "Doodle Jump", image: "images/cldoodlejumpgoober.png", category: "arcade" },
+      { file: "cldrawclimber.html", displayName: "Draw Climber", image: "images/cldrawclimber.png", category: "arcade" },
+      { file: "clearntodie.html", displayName: "Earn to Die", image: "images/clearntodie.png", category: "arcade" },
+      { file: "clfireboyandwatergirl.html", displayName: "Fireboy & Watergirl", image: "images/clfireboyandwatergirl.png", category: "puzzle" },
+      { file: "Clflappydunk.html", displayName: "Flappy Dunk", image: "images/clflappydunk.png", category: "arcade" },
+      { file: "clfreerider.html", displayName: "Free Rider", image: "images/clfreerider.png", category: "arcade" },
+      { file: "Clfunnyshooter2.html", displayName: "Funny Shooter 2", image: "images/clfunnyshooter2.png", category: "shooter" },
+      { file: "Clhappywheels.html", displayName: "Happy Wheels", image: "images/clhappywheels.png", category: "arcade" },
+      { file: "clhardwaretycoon.html", displayName: "Hardware Tycoon", image: "images/clhardwaretycoon.png", category: "strategy" },
+      { file: "clhelixjump.html", displayName: "Helix Jump", image: "images/clhelixjump.png", category: "arcade" },
+      { file: "Clhidenseek.html", displayName: "Hide & Seek", image: "images/clhidenseek.png", category: "arcade" },
+      { file: "Clholeio.html", displayName: "Hole.io", image: "images/clholeio.png", category: "arcade" },
+      { file: "Clidlebreakout.html", displayName: "Idle Breakout", image: "images/clidlebreakout.png", category: "puzzle" },
+      { file: "clidleminertycoon.html", displayName: "Idle Miner Tycoon", image: "images/clidleminertycoon.png", category: "strategy" },
+      { file: "Cljellytruckgood.html", displayName: "Jelly Truck", image: "images/cljellytruckgood.png", category: "racing" },
+      { file: "cljetpackjoyride.html", displayName: "Jetpack Joyride", image: "images/cljetpackjoyride.png", category: "arcade" },
+      { file: "cljohnnytrigger.html", displayName: "Johnny Trigger", image: "images/cljohnnytrigger.png", category: "shooter" },
+      { file: "Cllearntofly.html", displayName: "Learn to Fly", image: "images/cllearntofly.png", category: "arcade" },
+      { file: "clmadalinstuntcarsmultiplayerfixed.html", displayName: "Madalin Stunt Cars", image: "images/clmadalinstuntcarsmultiplayerfixed.png", category: "racing" },
+      { file: "clmotox3m.html", displayName: "Moto X3M", image: "images/clmotox3m.png", category: "racing" },
+      { file: "clmotox3mpoolparty.html", displayName: "Moto X3M Pool Party", image: "images/clmotox3mpoolparty.png", category: "racing" },
+      { file: "clmotox3mspookyland.html", displayName: "Moto X3M Spookyland", image: "images/clmotox3mspookyland.png", category: "racing" },
+      { file: "Clmotox3mwinter.html", displayName: "Moto X3M Winter", image: "images/clmotox3mwinter.png", category: "racing" },
+      { file: "clmutilate-a-doll.html", displayName: "Mutilate-A-Doll", image: "images/clmutilate-a-doll.png", category: "sandbox" },
+      { file: "clpaperio.html", displayName: "Paper.io", image: "images/clpaperio.png", category: "arcade" },
+      { file: "clpenaltykicks.html", displayName: "Penalty Kicks", image: "images/clpenaltykicks.png", category: "sports" },
+      { file: "cl2Dshooting.html", displayName: "2D Shooting", image: "images/cl2Dshooting.png", category: "shooter" },
+      { file: "cl3dash.html", displayName: "3 Dash", image: "images/cl3dash.png", category: "arcade" },
+      { file: "cl60secondsburgerrun.html", displayName: "60 Seconds Burger Run", image: "images/cl60secondsburgerrun.png", category: "arcade" },
+      { file: "cl8ballclassic.html", displayName: "8 Ball Classic", image: "images/cl8ballclassic.png", category: "sports" },
+      { file: "clacegangstertaxi.html", displayName: "Ace Gangster Taxi", image: "images/clacegangstertaxi.png", category: "racing" },
+      { file: "clkoopasrevenge.html", displayName: "Koopa's Revenge", image: "images/clkoopasrevenge.png", category: "classics" },
+      { file: "clbadpiggies.html", displayName: "Bad Piggies", image: "images/clbadpiggies.png", category: "puzzle" },
+      { file: "clbobtherobber.html", displayName: "Bob the Robber", image: "images/clbobtherobber.png", category: "strategy" },
+      { file: "clfactoryballs.html", displayName: "Factory Balls", image: "images/clfactoryballs.png", category: "puzzle" },
+      { file: "clfactoryballs2.html", displayName: "Factory Balls 2", image: "images/clfactoryballs2.png", category: "puzzle" },
+      { file: "clgoingballs.html", displayName: "Going Balls", image: "images/clgoingballs.png", category: "arcade" },
+      { file: "clgolddiggerfrvr.html", displayName: "Gold Digger FRVR", image: "images/clgolddiggerfrvr.png", category: "arcade" },
+      { file: "clsubwaysurfersmiami.html", displayName: "Subway Surfers Miami", image: "images/clsubwaysurfersmiami.png", category: "arcade" },
+      { file: "clvex2.html", displayName: "Vex 2", image: "images/clvex2.png", category: "arcade" },
+      { file: "clFIFA99.html", displayName: "FIFA 99", image: "images/clFIFA99.png", category: "sports" },
+      { file: "clFIFA07.html", displayName: "FIFA 07", image: "images/clFIFA07.png", category: "sports" },
+      { file: "clgta2.html", displayName: "GTA 2", image: "images/clgta2.png", category: "racing" },
+      { file: "cllegostarwars.html", displayName: "LEGO Star Wars", image: "images/cllegostarwars.png", category: "classics" },
+      { file: "clmadden98.html", displayName: "Madden 98", image: "images/clmadden98.png", category: "sports" },
+      { file: "TABS.html", displayName: "Totally Accurate Battle Simulator", image: "images/tabs.png", category: "strategy" }
+    ];
 
-  const img = document.createElement("img");
-  img.src = game.image;
-  img.alt = game.displayName;
-  img.className = "icon-wrapper";
-  a.appendChild(img);
+    function createGameCard(game) {
+      const a = document.createElement("a");
+      a.href = game.file;
+      a.className = "game-card";
+      a.role = "listitem";
 
-  const title = document.createElement("h3");
-  title.textContent = game.displayName;
-  a.appendChild(title);
+      const img = document.createElement("img");
+      img.src = game.image;
+      img.alt = game.displayName;
+      img.onerror = () => { img.src = defaultImage; }; // fallback if missing
+      a.appendChild(img);
 
-  const fileName = document.createElement("p");
-  fileName.textContent = game.file;
-  a.appendChild(fileName);
+      const title = document.createElement("h3");
+      title.textContent = game.displayName;
+      a.appendChild(title);
 
-  return a;
-}
+      return a;
+    }
 
-// Render catalog
-function renderCatalog(filterText = "", category = "all") {
-  const catalog = document.getElementById("gameCatalog");
-  catalog.innerHTML = "";
-  gameFiles
-    .filter(file => {
-      const matchesText = file.displayName.toLowerCase().includes(filterText.toLowerCase());
-      const matchesCategory = category === "all" || file.category === category;
-      return matchesText && matchesCategory;
-    })
-    .forEach(file => catalog.appendChild(createGameCard(file)));
-}
-
-const searchInput = document.getElementById("searchInput");
-const filterButtons = document.querySelectorAll(".filter-buttons button");
-
-renderCatalog();
-
-searchInput.addEventListener("input", (e) => {
-  const activeBtn = document.querySelector(".filter-buttons button.active");
-  const category = activeBtn ? activeBtn.dataset.category : "all";
-  renderCatalog(e.target.value, category);
-});
-
-filterButtons.forEach(button => {
-  button.addEventListener("click", () => {
-    filterButtons.forEach(btn => btn.classList.remove("active"));
-    button.classList.add("active");
-    renderCatalog(searchInput.value, button.dataset.category);
-  });
-});
-</script>
+    const gameGrid = document.getElementById("gameGrid");
+    gameFiles.forEach(game => {
+      gameGrid.appendChild(createGameCard(game));
+    });
+  </script>
 </body>
 </html>
