@@ -187,7 +187,6 @@ const gameFiles = [
   { file:"TABS.html", displayName:"Totally Accurate Battle Simulator", image:"images/TABS.png", category:"strategy" }
 ];
 
-// Create a game card
 function createGameCard(game) {
   const a = document.createElement("a");
   a.href = game.file;
@@ -204,9 +203,10 @@ function createGameCard(game) {
   title.textContent = game.displayName;
   a.appendChild(title);
 
-  const fileName = document.createElement("p");
-  fileName.textContent = game.file;
-  a.appendChild(fileName);
+  // Removed the file name display
+  // const fileName = document.createElement("p");
+  // fileName.textContent = game.file;
+  // a.appendChild(fileName);
 
   return a;
 }
